@@ -1,0 +1,14 @@
+<h1>Analysis show Page</h1>
+
+
+    {% if data %}
+    {% for i in data %}
+    <tr>
+        <td>{{i.position}}</td>
+        <td>{{i.dataframe}}</td>
+        
+    </tr>
+    {% endfor %}
+    {% endif %}
+
+</tbody>

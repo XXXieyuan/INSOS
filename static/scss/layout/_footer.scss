@@ -1,0 +1,18 @@
+.footer {
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 1) 25%,
+    rgba(13, 15, 18, 1) 56%
+  );
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1em;
+  color: $color-white;
+
+  &__copy {
+    font-family: $font-secondary;
+    letter-spacing: 1px;
+    font-size: 0.8rem;
+  }
+}

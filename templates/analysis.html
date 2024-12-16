@@ -1,0 +1,584 @@
+﻿<!DOCTYPE html>
+<!--Bug Log
+    3. adjust css 
+    -->
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="utf-8">
+        <meta content="width=device-width, initial-scale=1" name="viewport"><!-- Meta Description -->
+        <meta content="The INSOS Site provides the best Job portal for International Student Jobs." name="description">
+    
+        <title>INSOS | Analysis</title>
+    
+        <!-- Favicon -->
+        <link href="../static/img/favicon/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180">
+        <link href="../static/img/favicon/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png">
+        <link href="../static/img/favicon/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png">
+        <link href="/site.webmanifest" rel="manifest">
+        <link href="../static/img/favicon/safari-pinned-tab.svg" rel="mask-icon">
+        <meta content="#da532c" name="msapplication-TileColor">
+        <meta content="#ffffff" name="theme-color"><!-- Microsoft Tiles -->
+        <meta content="browserconfig.xml" name="msapplication-config">
+        <meta content="yes" name="apple-mobile-web-app-capable"><!-- BOOTSTRAP -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        {% load sass_tags %}
+        <!-- CSS  -->
+        <link rel="stylesheet" type="text/css" href="static/scss/analysis.css" />
+        <link href="{% sass_src 'scss/app.scss' %}" rel="stylesheet">
+    </head>
+<body>
+    <!-- NAVIGATION STARTS HERE  -->
+    <nav class="nav navbar navbar-expand-lg navbar-dark sticky-top" style="background: #000;">
+        <div class=" container-fluid">
+            <!-- THE BRAND  -->
+            <a class="navbar-brand nav__logo" href="/"><img alt="Navbar_logo" src="../static/img/navbar_logo.svg"></a>
+            <!-- MOBILE MENU  -->
+            <button aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation"
+                class="navbar-toggler" data-bs-target="#navbarNavAltMarkup" data-bs-toggle="collapse"
+                type="button"><span class="navbar-toggler-icon"></span></button> <!-- MOBILE MENU END -->
+
+
+            <!-- THE MENU ITEMS  -->
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+                <div class="navbar-nav align-items-center">
+                    <a class="nav-link nav__item" href="/">Find Jobs</a> 
+                    <a class="nav-link nav__item" href="analysis">Analysis</a> 
+                    <a class="nav-link nav__item" href="/#vision">About Us</a>
+                    {% if user.is_authenticated %}
+
+                    <div class="welcome">
+                        <p class="welcome__username">Welcome, <a href="profile">{{user.username}}</a></p>
+                        <a class="welcome__out black__button" href="logout">Logout</a>
+                    </div>
+                    {% else%}
+                    <a class="nav-link black__button" href="register">Sign Up</a> <a class="nav-link black__button"
+                        href="login">Login</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- NAVIGATION ENDS HERE  -->
+   
+    <!--Graphs Start Here-->
+
+    <div class="row pic">
+        <div style="padding: 3em;">
+        <h3>New report will be generated at the start of each month automatically</h3>
+        <h6>Please click on the donut to see different findings</h6>
+            <h6>*The number showing on the donut chart represent the number of jobs was posted last month</h6>
+        </div>
+        <div class="col-md-6 col-sm-6 col-6">
+            <canvas id="DP"></canvas>
+            
+        </div>
+        <div class="col-md-6 col-sm-6 col-6">
+            <canvas id="Radar"></canvas>
+        </div>
+        <div class="col-md-12 col-sm-12 col-12">
+            
+        </div>
+        <div class="col-md-12 col-sm-12 col-12">
+            <canvas id="Bar"></canvas>
+        </div>
+        <div style="padding: 2em;">
+        <hr>
+        <h6>The number of jobs posted by month</h6>
+        </div> 
+        <div class="col-md-12 col-sm-12 col-12">
+            <canvas id="Line"></canvas>
+        </div>
+        <div class="footer">
+            <div class="footer__text">
+              <p class="footer__copy">Copyright &copy; <span id="date"></span> | All rights reserved | Made ❤ UC Alumni</p>
+            </div>
+          </div>
+    </div>
+    <!--Graphs End Here-->
+    <!-- FOOTER END  -->
+  <script>
+    const date = new Date();
+    let fullYear = date.getFullYear();
+
+    const dateElement = document.getElementById("date");
+    dateElement.innerHTML = fullYear;
+  </script>
+    <script type="text/javascript">
+        /**Graph data**/
+        var web_developer =           {{ web_developer|safe }};
+        var software_engineer =       {{ software_engineer|safe }};
+        var data_analyst =            {{ data_analyst|safe }};
+        var network_engineer =        {{ network_engineer|safe }};
+        var cloud_architect =         {{ cloud_architect|safe }};
+        var software_tester =         {{ software_tester|safe }};
+        var developer_programmer =    {{ developer_programmer|safe }};
+        var analyst_programmer =      {{ analyst_programmer|safe }};
+        var ict_security_specialist = {{ ict_security_specialist|safe }};
+        var network_administrator =   {{ network_administrator|safe }};
+        var ict_support_engineer =    {{ ict_support_engineer|safe }};
+        var jobs = ['web-developer', 'data-analyst', 'software-engineer', 'network-engineer', 'cloud-architect', 'software-tester', 'developer-programmer', 'analyst-programmer', 'ict-security-specialist', 'network-administrator', 'ict-support-engineer'];
+        var name = 'Job Analysis';
+
+        /*------------Data Processing----------------------*/
+        var month_list = Object.values(web_developer)[1];
+        var jobs_distribution = [Object.keys(web_developer)[0],
+            Object.keys(data_analyst)[0],
+            Object.keys(software_engineer)[0],
+            Object.keys(network_engineer)[0],
+            Object.keys(cloud_architect)[0],
+            Object.keys(software_tester)[0],
+            Object.keys(developer_programmer)[0],
+            Object.keys(analyst_programmer)[0],
+            Object.keys(ict_security_specialist)[0],
+            Object.keys(network_administrator)[0],
+            Object.keys(ict_support_engineer)[0]];
+
+        var web_developer_history = Object.values(web_developer)[0]
+        delete web_developer[Object.keys(web_developer)[0]];
+        delete web_developer[Object.keys(web_developer)[0]];
+        var web_developer_skill = Object.keys(web_developer);
+        var web_developer_skill_grade = Object.values(web_developer);
+
+        var software_engineer_history = Object.values(software_engineer)[0]
+        delete software_engineer[Object.keys(software_engineer)[0]];
+        delete software_engineer[Object.keys(software_engineer)[0]];
+        var software_engineer_skill = Object.keys(software_engineer);
+        var software_engineer_skill_grade = Object.values(software_engineer);
+
+        var data_analyst_history = Object.values(data_analyst)[0]
+        delete data_analyst[Object.keys(data_analyst)[0]];
+        delete data_analyst[Object.keys(data_analyst)[0]];
+        var data_analyst_skill = Object.keys(data_analyst);
+        var data_analyst_skill_grade = Object.values(data_analyst);
+
+        var network_engineer_history = Object.values(network_engineer)[0]
+        delete network_engineer[Object.keys(network_engineer)[0]];
+        delete network_engineer[Object.keys(network_engineer)[0]];
+        var network_engineer_skill = Object.keys(network_engineer);
+        var network_engineer_skill_grade = Object.values(network_engineer);
+
+        var cloud_architect_history = Object.values(cloud_architect)[0]
+        delete cloud_architect[Object.keys(cloud_architect)[0]];
+        delete cloud_architect[Object.keys(cloud_architect)[0]];
+        var cloud_architect_skill = Object.keys(cloud_architect);
+        var cloud_architect_skill_grade = Object.values(cloud_architect);
+
+        var software_tester_history = Object.values(software_tester)[0]
+        delete software_tester[Object.keys(software_tester)[0]];
+        delete software_tester[Object.keys(software_tester)[0]];
+        var software_tester_skill = Object.keys(software_tester);
+        var software_tester_skill_grade = Object.values(software_tester);
+
+        var developer_programmer_history = Object.values(developer_programmer)[0]
+        delete developer_programmer[Object.keys(developer_programmer)[0]];
+        delete developer_programmer[Object.keys(developer_programmer)[0]];
+        var developer_programmer_skill = Object.keys(developer_programmer);
+        var developer_programmer_skill_grade = Object.values(developer_programmer);
+
+        var analyst_programmer_history = Object.values(analyst_programmer)[0]
+        delete analyst_programmer[Object.keys(analyst_programmer)[0]];
+        delete analyst_programmer[Object.keys(analyst_programmer)[0]];
+        var analyst_programmer_skill = Object.keys(analyst_programmer);
+        var analyst_programmer_skill_grade = Object.values(analyst_programmer);
+
+        var ict_security_specialist_history = Object.values(ict_security_specialist)[0]
+        delete ict_security_specialist[Object.keys(ict_security_specialist)[0]];
+        delete ict_security_specialist[Object.keys(ict_security_specialist)[0]];
+        var ict_security_specialist_skill = Object.keys(ict_security_specialist);
+        var ict_security_specialist_skill_grade = Object.values(ict_security_specialist);
+
+        var network_administrator_history = Object.values(network_administrator)[0]
+        delete network_administrator[Object.keys(network_administrator)[0]];
+        delete network_administrator[Object.keys(network_administrator)[0]];
+        var network_administrator_skill = Object.keys(network_administrator);
+        var network_administrator_skill_grade = Object.values(network_administrator);
+
+        var ict_support_engineer_history = Object.values(ict_support_engineer)[0]
+        delete ict_support_engineer[Object.keys(ict_support_engineer)[0]];
+        delete ict_support_engineer[Object.keys(ict_support_engineer)[0]];
+        var ict_support_engineer_skill = Object.keys(ict_support_engineer);
+        var ict_support_engineer_skill_grade = Object.values(ict_support_engineer);
+
+
+        //get gradient color
+        var gradientbar = document.getElementById('Bar').getContext("2d").createLinearGradient(0, 0, 0, 400);
+        gradientbar.addColorStop(0.4, "#1cb5e0");
+        gradientbar.addColorStop(1, "#3a607a");
+        var gradientpie = document.getElementById('DP').getContext("2d").createLinearGradient(0, 0, 0, 400);
+        gradientpie.addColorStop(0.4, "#1cb5e0");
+        gradientpie.addColorStop(1, "#3a607a");
+        var gradientline = document.getElementById('Line').getContext("2d").createLinearGradient(0, 0, 0, 400);
+        gradientline.addColorStop(0.4, "#1cb5e0");
+        gradientline.addColorStop(1, "#3a607a")
+        var gradientradar = document.getElementById('Radar').getContext("2d").createLinearGradient(0, 0, 0, 400);
+        gradientradar.addColorStop(0.4, "#1cb5e0");
+        gradientradar.addColorStop(1, "#3a607a");
+
+        
+        /*------------Register Service----------------------*/
+        Chart.pluginService.register({
+            beforeDraw: function (chart) {
+                if (chart.config.options.elements.center) {
+                    // Get ctx from string
+                    var ctx = document.getElementById("DP").getContext("2d");
+
+                    // Get options from the center object in options
+                    var centerConfig = chart.config.options.elements.center;
+                    var fontStyle = centerConfig.fontStyle || 'Arial';
+                    var txt = centerConfig.text;
+                    var color = centerConfig.color || '#000';
+                    var maxFontSize = centerConfig.maxFontSize || 75;
+                    var sidePadding = centerConfig.sidePadding || 20;
+                    var sidePaddingCalculated = (sidePadding / 100) * (chart.innerRadius * 2)
+                    // Start with a base font of 30px
+                    ctx.font = "30px " + fontStyle;
+
+                    // Get the width of the string and also the width of the element minus 10 to give it 5px side padding
+                    var stringWidth = ctx.measureText(txt).width;
+                    var elementWidth = (chart.innerRadius * 2) - sidePaddingCalculated;
+
+                    // Find out how much the font can grow in width.
+                    var widthRatio = elementWidth / stringWidth;
+                    var newFontSize = Math.floor(30 * widthRatio);
+                    var elementHeight = (chart.innerRadius * 2);
+
+                    // Pick a new font size so it will not be larger than the height of label.
+                    var fontSizeToUse = Math.min(newFontSize, elementHeight, maxFontSize);
+                    var minFontSize = centerConfig.minFontSize;
+                    var lineHeight = centerConfig.lineHeight || 25;
+                    var wrapText = false;
+
+                    if (minFontSize === undefined) {
+                        minFontSize = 20;
+                    }
+
+                    if (minFontSize && fontSizeToUse < minFontSize) {
+                        fontSizeToUse = minFontSize;
+                        wrapText = true;
+                    }
+
+                    // Set font settings to draw it correctly.
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    var centerX = ((chart.chartArea.left + chart.chartArea.right) / 2);
+                    var centerY = ((chart.chartArea.top + chart.chartArea.bottom) / 2);
+                    ctx.font = fontSizeToUse + "px " + fontStyle;
+                    ctx.fillStyle = color;
+
+                    if (!wrapText) {
+                        ctx.fillText(txt, centerX, centerY);
+                        return;
+                    }
+
+                    var words = txt.split(' ');
+                    var line = '';
+                    var lines = [];
+
+                    // Break words up into multiple lines if necessary
+                    for (var n = 0; n < words.length; n++) {
+                        var testLine = line + words[n] + ' ';
+                        var metrics = ctx.measureText(testLine);
+                        var testWidth = metrics.width;
+                        if (testWidth > elementWidth && n > 0) {
+                            lines.push(line);
+                            line = words[n] + ' ';
+                        } else {
+                            line = testLine;
+                        }
+                    }
+
+                    // Move the center up depending on line height and number of lines
+                    centerY -= (lines.length / 2) * lineHeight;
+
+                    for (var n = 0; n < lines.length; n++) {
+                        ctx.fillText(lines[n], centerX, centerY);
+                        centerY += lineHeight;
+                    }
+                    //Draw text in center
+                    ctx.fillText(line, centerX, centerY);
+                }
+            }
+        });
+
+        /*------------Graphic Drawing----------------------*/
+        var dpchart = new Chart(
+            document.getElementById('DP'),
+            {
+                type: 'doughnut',
+                data: {
+                    labels: jobs,
+                    datasets: [{
+                        label: name,
+                        data: jobs_distribution,
+                        backgroundColor: [
+                            "#c75a5a",
+                            "#d93f3f",
+                            "#d9b03f",
+                            "#bfd93f",
+                            "#3fd9a8",
+                            "#6bd6db",
+                            "#6b9edb",
+                            "#716bdb",
+                            "#ba6bdb",
+                            "#db6bc1",
+                            "#1d702f"]
+                    }]
+                },
+                options: {
+                    elements: {
+                        center: {
+                            text: 'Web Developer',
+                            sidePadding:30
+                        }
+                    }
+                }
+            })
+
+        var Barchart = new Chart(
+            document.getElementById('Bar'),
+            {
+                type: 'bar',
+                data: {
+                    labels: web_developer_skill,
+                    datasets: [{
+                        label: 'Skils Summary',
+                        data: web_developer_skill_grade,
+                        backgroundColor: gradientbar
+                    }],
+                    options: {}
+                }
+            });
+
+        var linechart = new Chart(
+            document.getElementById('Line'),
+            {
+                type: 'line',
+                data: {
+                    labels: month_list,
+                    datasets: [{
+                        label: 'Job Posted History',
+                        data: web_developer_history,
+                        backgroundColor: gradientline,
+                        borderwidth: 1
+                    }]
+                },
+                options: {}
+            }
+        );
+
+        var Radarchart = new Chart(
+            document.getElementById('Radar'),
+            {
+                type: 'radar',
+                data: {
+                    labels: web_developer_skill,
+                    datasets: [{
+                        label: 'Skils Summary',
+                        data: web_developer_skill_grade,
+                        backgroundColor: gradientradar,
+                        borderColor: gradientradar,
+                        borderwidth: 3
+                    }]
+                },
+                options: {}
+            }
+        );
+
+        var repeated_click_track = new Array(jobs_distribution.length).fill(true);
+        document.getElementById("DP").onclick = function (evt) {
+            var activepoints = dpchart.getElementsAtEvent(evt);
+            //get index of each arc
+            try {
+                var index = activepoints[0]._index;
+            }
+            catch(err) {
+                return;
+            }            
+
+            if (jobs[index] == "web-developer") {
+                if (repeated_click_track[index] == true) {
+                    Barchart.data.datasets[0].data = web_developer_skill_grade;
+                    Barchart.data.labels = web_developer_skill;
+                    Radarchart.data.labels = web_developer_skill;
+                    linechart.data.datasets[0].data = web_developer_history;
+                    Radarchart.data.datasets[0].data = web_developer_skill_grade;
+                    dpchart.options.elements.center.text = 'Web Developer';
+                    dpchart.update();
+                    Barchart.update();
+                    linechart.update();
+                    Radarchart.update();
+                    repeated_click_track = new Array(jobs_distribution.length).fill(true);
+                    repeated_click_track[index] = false;
+                }
+                
+            } else if (jobs[index] == "software-engineer") {
+                if (repeated_click_track[index] == true) {
+                    Barchart.data.datasets[0].data = software_engineer_skill_grade;
+                    Barchart.data.labels = software_engineer_skill;
+                    Radarchart.data.labels = software_engineer_skill;
+                    linechart.data.datasets[0].data = software_engineer_history;
+                    Radarchart.data.datasets[0].data = software_engineer_skill_grade;
+                    dpchart.options.elements.center.text = 'Software Engineer';
+                    dpchart.update();
+                    Barchart.update();
+                    linechart.update();
+                    Radarchart.update();
+                    repeated_click_track = new Array(jobs_distribution.length).fill(true);
+                    repeated_click_track[index] = false;
+                    console.log(dpchart.options.elements.center.text);
+                }
+               
+            } else if (jobs[index] == "data-analyst") {
+                if (repeated_click_track[index] == true) {
+                    Barchart.data.datasets[0].data = data_analyst_skill_grade;
+                    Barchart.data.labels = data_analyst_skill;
+                    Radarchart.data.labels = data_analyst_skill;
+                    linechart.data.datasets[0].data = data_analyst_history;
+                    Radarchart.data.datasets[0].data = data_analyst_skill_grade;
+                    dpchart.options.elements.center.text = 'Data Analyst';
+                    dpchart.update();
+                    Barchart.update();
+                    linechart.update();
+                    Radarchart.update();
+                    repeated_click_track = new Array(jobs_distribution.length).fill(true);
+                    repeated_click_track[index] = false;
+                }
+                
+            } else if (jobs[index] == "network-engineer") {
+                if (repeated_click_track[index] == true) {
+                    Barchart.data.datasets[0].data = network_engineer_skill_grade;
+                    Barchart.data.labels = network_engineer_skill;
+                    Radarchart.data.labels = network_engineer_skill;
+                    linechart.data.datasets[0].data = network_engineer_history;
+                    Radarchart.data.datasets[0].data = network_engineer_skill_grade;
+                    dpchart.options.elements.center.text = 'Network Engineer';
+                    dpchart.update();
+                    Barchart.update();
+                    linechart.update();
+                    Radarchart.update();
+                    repeated_click_track = new Array(jobs_distribution.length).fill(true);
+                    repeated_click_track[index] = false;
+                }
+                
+            } else if (jobs[index] == "cloud-architect") {
+                if (repeated_click_track[index] == true) {
+                    Barchart.data.datasets[0].data = cloud_architect_skill_grade;
+                    Barchart.data.labels = cloud_architect_skill;
+                    Radarchart.data.labels = cloud_architect_skill;
+                    linechart.data.datasets[0].data = cloud_architect_history;
+                    Radarchart.data.datasets[0].data = cloud_architect_skill_grade;
+                    dpchart.options.elements.center.text = 'Cloud Architect';
+                    dpchart.update();
+                    Barchart.update();
+                    linechart.update();
+                    Radarchart.update();
+                    repeated_click_track = new Array(jobs_distribution.length).fill(true);
+                    repeated_click_track[index] = false;
+                }
+                
+            } else if (jobs[index] == "software-tester") {
+                if (repeated_click_track[index] == true) {
+                    Barchart.data.datasets[0].data = software_tester_skill_grade;
+                    Barchart.data.labels = software_tester_skill;
+                    Radarchart.data.labels = software_tester_skill;
+                    linechart.data.datasets[0].data = software_tester_history;
+                    Radarchart.data.datasets[0].data = software_tester_skill_grade;
+                    dpchart.options.elements.center.text = 'Software Tester';
+                    dpchart.update();
+                    Barchart.update();
+                    linechart.update();
+                    Radarchart.update();
+                    repeated_click_track = new Array(jobs_distribution.length).fill(true);
+                    repeated_click_track[index] = false;
+                }
+                
+            } else if (jobs[index] == "developer-programmer") {
+                if (repeated_click_track[index] == true) {
+                    Barchart.data.datasets[0].data = developer_programmer_skill_grade;
+                    Barchart.data.labels = developer_programmer_skill;
+                    Radarchart.data.labels = developer_programmer_skill;
+                    linechart.data.datasets[0].data = developer_programmer_history;
+                    Radarchart.data.datasets[0].data = developer_programmer_skill_grade;
+                    dpchart.options.elements.center.text = 'Developer Programmer';
+                    dpchart.update();
+                    Barchart.update();
+                    linechart.update();
+                    Radarchart.update();
+                    repeated_click_track = new Array(jobs_distribution.length).fill(true);
+                    repeated_click_track[index] = false;
+                }
+                
+            } else if (jobs[index] == "analyst-programmer") {
+                if (repeated_click_track[index] == true) {
+                    Barchart.data.datasets[0].data = analyst_programmer_skill_grade;
+                    Barchart.data.labels = analyst_programmer_skill;
+                    Radarchart.data.labels = analyst_programmer_skill;
+                    linechart.data.datasets[0].data = analyst_programmer_history;
+                    Radarchart.data.datasets[0].data = analyst_programmer_skill_grade;
+                    dpchart.options.elements.center.text = 'Analyst Programmer';
+                    dpchart.update();
+                    Barchart.update();
+                    linechart.update();
+                    Radarchart.update();
+                    repeated_click_track = new Array(jobs_distribution.length).fill(true);
+                    repeated_click_track[index] = false;
+                }
+                
+            } else if (jobs[index] == "ict-security-specialist") {
+                if (repeated_click_track[index] == true) {
+                    Barchart.data.datasets[0].data = ict_security_specialist_skill_grade;
+                    Barchart.data.labels = ict_security_specialist_skill;
+                    Radarchart.data.labels = ict_security_specialist_skill;
+                    linechart.data.datasets[0].data = ict_security_specialist_history;
+                    Radarchart.data.datasets[0].data = ict_security_specialist_skill_grade;
+                    dpchart.options.elements.center.text = 'ICT Security Specialist';
+                    dpchart.update();
+                    Barchart.update();
+                    linechart.update();
+                    Radarchart.update();
+                    repeated_click_track = new Array(jobs_distribution.length).fill(true);
+                    repeated_click_track[index] = false;
+                }
+                
+            } else if (jobs[index] == "network-administrator") {
+                if (repeated_click_track[index] == true) {
+                    Barchart.data.datasets[0].data = network_administrator_skill_grade;
+                    Barchart.data.labels = network_administrator_skill;
+                    Radarchart.data.labels = network_administrator_skill;
+                    linechart.data.datasets[0].data = network_administrator_history;
+                    Radarchart.data.datasets[0].data = network_administrator_skill_grade;
+                    dpchart.options.elements.center.text = 'Network Administrator';
+                    dpchart.update();
+                    Barchart.update();
+                    linechart.update();
+                    Radarchart.update();
+                    repeated_click_track = new Array(jobs_distribution.length).fill(true);
+                    repeated_click_track[index] = false;
+                }
+                
+            } else if (jobs[index] == "ict-support-engineer") {
+                if (repeated_click_track[index] == true) {
+                    Barchart.data.datasets[0].data = ict_support_engineer_skill_grade;
+                    Barchart.data.labels = ict_support_engineer_skill;
+                    Radarchart.data.labels = ict_support_engineer_skill;
+                    linechart.data.datasets[0].data = ict_support_engineer_history;
+                    Radarchart.data.datasets[0].data = ict_support_engineer_skill_grade;
+                    dpchart.options.elements.center.text = 'ICT Support Engineer';
+                    dpchart.update();
+                    Barchart.update();
+                    linechart.update();
+                    Radarchart.update();
+                    repeated_click_track = new Array(jobs_distribution.length).fill(true);
+                    repeated_click_track[index] = false;
+                }
+
+            }else {
+                return;
+            }
+        }
+    </script>
+</body>
+</html>

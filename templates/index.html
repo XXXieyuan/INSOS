@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1" name="viewport"><!-- Meta Description -->
+  <meta content="The INSOS Site provides the best Job portal for International Student Jobs." name="description">
+
+  <title>INSOS</title>
+
+  <!-- Favicon -->
+  <link href="../static/img/favicon/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180">
+  <link href="../static/img/favicon/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png">
+  <link href="../static/img/favicon/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png">
+  <link href="/site.webmanifest" rel="manifest">
+  <link href="../static/img/favicon/safari-pinned-tab.svg" rel="mask-icon">
+  <meta content="#da532c" name="msapplication-TileColor">
+  <meta content="#ffffff" name="theme-color"><!-- Microsoft Tiles -->
+  <meta content="browserconfig.xml" name="msapplication-config">
+  <meta content="yes" name="apple-mobile-web-app-capable">
+  <!-- BOOTSTRAP -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  {% load sass_tags %}
+  <!-- CSS  -->
+  <link href="{% sass_src 'scss/app.scss' %}" rel="stylesheet">
+</head>
+
+<body>
+
+  <!-- NAVIGATION STARTS HERE  -->
+
+  <nav class="nav navbar navbar-expand-lg navbar-dark sticky-top" style="background: #000;">
+    <div class=" container-fluid">
+      <!-- THE BRAND  -->
+      <a class="navbar-brand nav__logo" href="/"><img alt="Navbar_logo" src="../static/img/navbar_logo.svg"></a>
+      <!-- MOBILE MENU  -->
+      <button aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation"
+        class="navbar-toggler" data-bs-target="#navbarNavAltMarkup" data-bs-toggle="collapse" type="button"><span
+          class="navbar-toggler-icon"></span></button> <!-- MOBILE MENU END -->
+
+
+      <!-- THE MENU ITEMS  -->
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+        <div class="navbar-nav align-items-center">
+          <a class="nav-link nav__item" href="#">Find Jobs</a> 
+          <a class="nav-link nav__item" href="analysis">Analysis</a> 
+          <a class="nav-link nav__item" href="#vision">About Us</a>
+          {% if user.is_authenticated %}
+
+          <div class="welcome">
+            <p class="welcome__username">Welcome, <a href="/templates/profile.html">{{user.username}}</a></p>
+            <a class="welcome__out black__button" href="logout">Logout</a>
+          </div>
+          {% else%}
+          <a class="nav-link black__button" href="register">Sign Up</a> <a class="nav-link black__button"
+            href="login">Login</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </nav>
+  <!-- NAVIGATION ENDS HERE  -->
+
+  <!-- FORM SECTION START  -->
+  <section class="form" id="form">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-8">
+          <div class="form__text">
+            <p class="form__motto">FOR STUDENTS BY STUDENTS</p>
+
+
+            <h1 class="form__title">International Student Jobs</h1>
+
+
+            <h3 class="form__des">Find your next dream.</h3>
+          </div>
+
+
+          <form action="counter" class="form__wrapper" method="post">
+            {% csrf_token %} <select class="form__item" name="position" required="">
+              <option value="web-developer">
+                Web Developer
+              </option>
+
+              <option value="software-engineer">
+                Software Engineer
+              </option>
+
+              <option value="data-analyst">
+                Data Analyst
+              </option>
+
+              <option value="network-engineer">
+                Network Engineer
+              </option>
+
+              <option value="cloud-architect">
+                Cloud Architect
+              </option>
+
+              <option value="software-tester">
+                Software Tester
+              </option>
+
+              <option value="developer-programmer">
+                Developer Programmer
+              </option>
+
+              <option value="analyst-programmer">
+                Analyst Programmer
+              </option>
+
+              <option value="network-administrator">
+                Network Administrator
+              </option>
+
+              <option value="ict-support-engineer">
+                ICT Support Engineer
+              </option>
+            </select><br>
+            <select class="form__item" id="area" name="area">
+              <option value="in-All-Canberra-ACT">
+                ACT
+              </option>
+
+            </select><br>
+            <button target="_blank" class="black__button mt-3" type="submit" value="Submit">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- FORM SECTION END  -->
+  
+  <!-- OFFER SECTION START HERE -->
+  <section class="offer">
+    <div class="container">
+      <div class="row justify-content-center text-center">
+        <h2 class="offer__title">What We offer</h2>
+
+
+        <div class="row mt-3 g-5">
+          <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="card">
+              <i class="bi bi-shield-lock card__icon"></i>
+
+              <div class="card-body">
+                <h5 class="card-title">Full Protection</h5>
+
+
+                <p class="card-text">Our site is 100% safe where user data protection is our first priority.</p>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="card">
+              <i class="bi bi-arrow-repeat card__icon"></i>
+
+              <div class="card-body">
+                <h5 class="card-title">Daily Updates</h5>
+
+
+                <p class="card-text">The jobs listed in our site are regularly updated to provide recent jobs.</p>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="card">
+              <i class="bi bi-headset card__icon"></i>
+
+              <div class="card-body">
+                <h5 class="card-title">IT JOBS</h5>
+
+
+                <p class="card-text">Only for international students in Canberra.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- OFFER SECTION ENDS HERE  -->
+
+
+  <!-- CREATIVE MIND AREA START  -->
+  <div class="creative__mind_area">
+    <div class="container-fluid p-0">
+      <div class="row no-gutters align-items-center">
+        <!-- FIRST IMAGE COLUMN  -->
+
+
+        <div class="col-md-6 col-lg-6">
+          <div class="creative__thumb"><img alt="Creative-mind" src="../static/img/creative_mind_3.png">
+          </div>
+        </div>
+
+        <!-- SECOND INFORMATION COLUMN  -->
+        <div class=" col-md-6 col-lg-5">
+          <div class="creative__info">
+            <div class="creative__title">
+              <h3>Job % for Internationals in ACT.</h3>
+
+
+              <p>The percentage related with tech jobs for international student is:</p>
+            </div>
+
+
+            <div class="creative__progressBars">
+              <div class="single_bar">
+                <h4>Data Analyst</h4>
+
+
+                <div class="progress">
+                  <div aria-valuemax="100" aria-valuemin="0" class="progress-bar" role="progressbar"
+                    style="width: 41%;">
+                    <span>41%</span>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="single_bar">
+                <h4>Web Dev</h4>
+
+
+                <div class="progress">
+                  <div aria-valuemax="100" aria-valuemin="0" class="progress-bar" role="progressbar"
+                    style="width: 37%;">
+                    <span>37%</span>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="single_bar">
+                <h4>Soft Eng</h4>
+
+
+                <div class="progress">
+                  <div aria-valuemax="100" aria-valuemin="0" class="progress-bar" role="progressbar"
+                    style="width: 34%;">
+                    <span>34%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button class="black__button"><a class="creative__button" href="#">Go to Skills</a></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- CREATIVE MIND AREA END  -->
+
+
+  <!-- VISION SECTION START -->
+  <section class="vision" id="vision">
+    <div class="container">
+      <div class="row vision__row">
+        <div class="col-md-6 about__text">
+          <h2 class="vision__title">Our Vision</h2>
+
+
+          <p class="vision__description">We aim to provide better and easy solution for international students regarding
+            there dream job .</p>
+        </div>
+
+
+        <div class="col-md-6"><img class="vision__img" height="100%" src="../static/img/vision_1.png" width="100%">
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- VISION SECTION END -->
+
+
+  <!-- Bootstrap js -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js">
+  </script> <!-- Javascript -->
+
+  <script src="../static/js/app.js">
+  </script><!-- FOOTER START  -->
+
+
+  <div class="footer">
+    <div class="footer__text">
+      <p class="footer__copy">Copyright &copy; <span id="date"></span> | All rights reserved | Made ❤ UC Alumni</p>
+    </div>
+  </div>
+  <!-- FOOTER END  -->
+  <script>
+    const date = new Date();
+    let fullYear = date.getFullYear();
+
+    const dateElement = document.getElementById("date");
+    dateElement.innerHTML = fullYear;
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,135 @@
+// RESET PAGE
+.reset_pw {
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 1) 25%,
+    rgba(13, 15, 18, 1) 56%
+  );
+  padding: 3em 0;
+  color: $color-white;
+
+  .black__button {
+    margin-right: 0;
+  }
+
+  &__container {
+    border-color: white;
+    border-radius: 5em;
+    padding: 7em;
+    border-style: solid;
+    text-align: center;
+
+    @media (max-width: 576px) {
+      border-style: none;
+    }
+  }
+
+  &__button {
+    margin-top: 1.5em;
+    background-color: $color-white;
+    color: $color-black;
+    padding: 0.5em 2em;
+    border: none;
+    transition: 0.3s all;
+    transform: scale(0.95);
+
+    &:hover {
+      transform: scale(1);
+      opacity: 0.8;
+    }
+  }
+
+  &__invalid {
+    letter-spacing: 0.05em;
+    font-size: 0.9rem;
+    a {
+      text-decoration: none;
+    }
+  }
+
+  &__img {
+    padding-bottom: 1em;
+  }
+  &__space {
+    margin-left: 7em;
+    margin-right: 7em;
+  }
+
+  &__complete {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 100%;
+
+    h1 {
+      font-family: "Calligraffitti", cursive;
+      text-transform: uppercase;
+    }
+
+    a {
+      text-decoration: none;
+      color: $color-black;
+
+      &:hover {
+        color: $color-white;
+      }
+    }
+  }
+}
+
+.font-lock {
+  font-size: 7rem !important;
+}
+
+// RESENT PASSWORD DONE PAGE START
+.reset_pw_done {
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 1) 25%,
+    rgba(13, 15, 18, 1) 56%
+  );
+  padding: 3em 0;
+  color: $color-white;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+// RESENT PASSWORD DONE PAGE END
+
+// RESET PASSWORD FORGOT
+.reset_pw_forgot {
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 1) 25%,
+    rgba(13, 15, 18, 1) 56%
+  );
+  padding: 3em 0;
+  color: $color-white;
+
+  &__container {
+    @media (max-width: 375px) {
+      border-style: none;
+    }
+
+    border-color: white;
+    border-radius: 5em;
+    padding: 7em 3em;
+    border-style: solid;
+    text-align: center;
+  }
+
+  &__form {
+    @media (max-width: 375px) {
+      font-size: 0.7rem;
+    }
+
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+  }
+
+  &__form > div {
+    margin: 1em 0;
+  }
+}

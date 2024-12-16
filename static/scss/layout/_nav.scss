@@ -1,0 +1,47 @@
+.nav {
+  color: $color-white;
+
+  &__logo {
+    img {
+      width: 200px;
+    }
+  }
+
+  &__item {
+    padding-right: 1.5em !important;
+    color: $color-white !important;
+    letter-spacing: 1px;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}
+
+.welcome {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    margin-top: 1em;
+  }
+
+  &__username {
+    margin: 0 !important;
+
+    a {
+      text-decoration: none;
+      color: $color-white;
+      font-size: 0.8rem;
+    }
+  }
+
+  &__out {
+    text-decoration: none;
+    color: $color-white;
+  }
+}

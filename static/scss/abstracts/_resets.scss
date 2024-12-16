@@ -1,0 +1,23 @@
+p {
+  margin: 0 !important;
+}
+
+ul,
+ol,
+li {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.svg-img {
+  height: 50%;
+  width: 100%;
+
+  @media (max-width: 576px) {
+    height: 30%;
+  }
+}
+
+.svg1 {
+  background-color: $color-white;
+}

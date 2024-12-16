@@ -1,0 +1,10 @@
+﻿body {
+    background-color: white;
+    text-align: center;
+}
+
+.pic {
+    background-image: url(../img/analysis.jpg);
+    position: absolute;
+    background-size: cover;
+}

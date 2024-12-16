@@ -1,0 +1,328 @@
+// CSS STARTS HERE
+*,
+*:before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: $font-primary;
+}
+
+// FORM SECTION START
+.form {
+  padding: 3rem 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 1) 25%,
+    rgba(13, 15, 18, 1) 56%
+  );
+
+  &__text {
+    text-align: center;
+  }
+
+  &__motto {
+    color: $color-white;
+    text-transform: uppercase;
+    padding: 2rem 0;
+    font-size: 0.9rem;
+  }
+
+  &__title {
+    color: $color-white;
+    text-transform: uppercase;
+    padding: 0 0 2rem;
+  }
+
+  &__des {
+    color: $color-white;
+    padding: 0 0 2rem;
+    font-size: 1.6rem;
+    letter-spacing: 1px;
+  }
+
+  &__wrapper {
+    text-align: center;
+    align-self: center;
+  }
+
+  &__item {
+    width: 50%;
+    margin: 1em 0;
+    background-color: $color-white;
+    border: none;
+    padding: 0.5em;
+    letter-spacing: 0.07em;
+    color: $color-black;
+  }
+}
+// FORM SECTION END
+
+// OFFER SECTION START
+.offer {
+  background-color: #303030;
+  color: $color-white;
+  padding: 3rem 0;
+
+  &__title {
+    font-family: $font-secondary;
+    text-transform: uppercase;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid $color-white;
+    width: 30%;
+  }
+
+  .row {
+    align-items: center;
+    justify-content: center;
+
+    .card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: #000 !important;
+      border-radius: 25px;
+      box-shadow: 5px 5px 20px;
+      padding: 2em;
+      height: 100%;
+      width: 100%;
+
+      @media (max-width: 992px) {
+        height: 100%;
+      }
+
+      @media (max-width: 768px) {
+        width: 40vw;
+        margin: 0 auto;
+      }
+
+      @media (max-width: 520px) {
+        width: 100%;
+      }
+
+      &-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+
+        @media (max-width: 992px) {
+          font-size: 1.2rem;
+        }
+
+        @media (max-width: 375px) {
+          font-size: 1rem;
+        }
+      }
+
+      &__icon {
+        color: $color-white;
+        width: 150px;
+        height: 150px;
+        font-size: 7em;
+        text-align: center;
+
+        @media (max-width: 992px) {
+          font-size: 5em;
+        }
+      }
+
+      &-text {
+        letter-spacing: 1px;
+        font-family: $font-secondary;
+        line-height: 1.5;
+        font-size: 1rem;
+
+        @media (max-width: 992px) {
+          font-size: 0.8rem;
+        }
+
+        @media (max-width: 375px) {
+          font-size: 0.7rem;
+        }
+      }
+    }
+  }
+}
+
+// OFFER SECTION END
+
+// CREATIVE MIND START
+.creative {
+  &__mind_area {
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 1) 25%,
+      rgba(13, 15, 18, 1) 56%
+    );
+    color: $color-white;
+  }
+
+  &__thumb {
+    img {
+      width: 100%;
+    }
+  }
+
+  &__info {
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 96px;
+
+    @media (max-width: 992px) {
+      padding-top: 0;
+      padding-bottom: 0;
+      padding-left: 30px;
+      padding-right: 15px;
+    }
+
+    @media (max-width: 768px) {
+      padding-top: 50px;
+      padding-bottom: 50px;
+      padding-left: 35px;
+      padding-right: 15px;
+    }
+
+    @media (max-width: 576px) {
+      padding-top: 50px;
+      padding-bottom: 30px;
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+  }
+
+  &__title {
+    h3 {
+      @media (max-width: 1200px) {
+        font-size: 1.7rem;
+      }
+      @media (max-width: 992px) {
+        font-size: 1.4rem;
+      }
+      @media (max-width: 768px) {
+        font-size: 1.2rem;
+      }
+    }
+    p {
+      font-size: 1rem;
+
+      @media (max-width: 992px) {
+        font-size: 0.9rem;
+      }
+    }
+  }
+
+  &__button {
+    text-decoration: none;
+    color: $color-black;
+
+    &:hover {
+      text-decoration: none;
+      color: $color-white;
+    }
+  }
+
+  &__progressBars {
+    margin-top: 28px;
+    margin-bottom: 60px;
+    @media (max-width: 992px) {
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+
+    .single_bar {
+      margin-bottom: 25px;
+      @media (max-width: 992px) {
+        margin-bottom: 10px;
+      }
+      h4 {
+        font-size: 16px;
+        color: $color-white;
+        font-weight: 500;
+        margin-bottom: 10px;
+      }
+      .progress {
+        height: 3px;
+        overflow: visible;
+        font-size: 0.75rem;
+        background-color: transparent;
+        border-radius: 7px;
+        position: relative;
+
+        .progress-bar {
+          background: $color-white;
+        }
+
+        span {
+          font-size: 1.3rem;
+          color: $color-white;
+          position: absolute;
+          right: 0;
+          font-weight: 600;
+
+          @media (max-width: 992px) {
+            font-size: 1.1rem;
+          }
+          @media (max-width: 768px) {
+            font-size: 1rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+// VISION SECTION
+.vision {
+  background: linear-gradient(
+    45deg,
+    rgba(0, 0, 0, 1) 25%,
+    rgba(13, 15, 18, 1) 56%
+  );
+  color: $color-white;
+  padding: 3rem 0;
+
+  @media (max-width: 576px) {
+    text-align: center;
+  }
+
+  &__row {
+    align-items: center;
+    @media (max-width: 576px) {
+      flex-direction: column-reverse !important;
+    }
+  }
+
+  &__text {
+    text-align: right;
+    letter-spacing: 0.05em;
+  }
+
+  &__title {
+    font-family: $font-primary;
+    font-size: 3rem;
+    font-weight: 600;
+
+    @media (max-width: 576px) {
+      font-size: 1.5rem;
+    }
+  }
+
+  &__description {
+    font-size: 1.5rem;
+    font-weight: 300;
+
+    @media (max-width: 576px) {
+      font-size: 1rem;
+    }
+  }
+
+  &__img {
+    @media (max-width: 576px) {
+      width: 50%;
+    }
+  }
+}
+
+// VISION SECTION END

@@ -1,0 +1,11 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\myapp",
+    "\\myapp\\management",
+    "\\myapp\\management\\commands",
+    "\\StyleTest"
+  ],
+  "SelectedNode": "\\StyleTest\\settings.py",
+  "PreviewInSolutionExplorer": false
+}

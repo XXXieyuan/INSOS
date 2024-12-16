@@ -1,0 +1,90 @@
+.counter {
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 1) 25%,
+    rgba(13, 15, 18, 1) 56%
+  );
+  color: $color-white !important;
+  letter-spacing: 1px;
+  padding: 3em 0;
+
+  .black__button {
+    @media (max-width: 500px) {
+      font-size: 0.7rem;
+      margin: 0;
+      padding: 0.5em !important;
+    }
+
+    font-family: $font-primary;
+    text-decoration: none;
+    color: $color-black;
+    font-size: 0.9rem;
+
+    &:hover {
+      color: $color-white !important;
+    }
+
+    a {
+      text-decoration: none;
+      color: $color-black;
+
+      &:hover {
+        color: $color-white;
+      }
+    }
+  }
+
+  &__resultswrapper {
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  &__results {
+    text-align: center;
+  }
+
+  &__textleft {
+    @media (max-width: 500px) {
+      text-align: center;
+    }
+    text-align: left;
+  }
+
+  &__textright {
+    @media (max-width: 500px) {
+      text-align: center;
+    }
+    text-align: right;
+  }
+}
+
+.table {
+  thead {
+    color: $color-white;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+
+    th {
+      @media (max-width: 500px) {
+        font-size: 0.8rem;
+      }
+
+      font-size: 1rem;
+      padding: 1em;
+    }
+  }
+
+  tbody {
+    padding: 1em 0;
+    font-size: 0.9rem;
+    font-family: $font-secondary;
+
+    td {
+      @media (max-width: 500px) {
+        font-size: 0.8rem;
+      }
+      font-size: 1rem;
+      padding: 1em;
+    }
+  }
+}
